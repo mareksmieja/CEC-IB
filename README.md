@@ -1,1 +1,1 @@
-# semi-supervised cross-entropy clustering
+# semi-supervised cross-entropy clustering - M. Smieja
