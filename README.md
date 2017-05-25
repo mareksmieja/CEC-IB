@@ -1,1 +1,1 @@
-# hello
+# semi-supervised cross-entropy clustering
