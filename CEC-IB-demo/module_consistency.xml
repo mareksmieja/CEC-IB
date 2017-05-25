@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_consistency" default="compile.module.consistency">
+  <dirname property="module.consistency.basedir" file="${ant.file.module_consistency}"/>
+  
+  <property name="module.jdk.home.consistency" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.consistency" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.consistency" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.consistency" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="consistency.output.dir" value="${module.consistency.basedir}/out/production/Consistency"/>
+  <property name="consistency.testoutput.dir" value="${module.consistency.basedir}/out/test/Consistency"/>
+  
+  <path id="consistency.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="consistency.module.production.classpath">
+    <path refid="${module.jdk.classpath.consistency}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.consistency.classpath"/>
+  </path>
+  
+  <path id="consistency.runtime.production.module.classpath">
+    <pathelement location="${consistency.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.consistency.classpath"/>
+  </path>
+  
+  <path id="consistency.module.classpath">
+    <path refid="${module.jdk.classpath.consistency}"/>
+    <pathelement location="${consistency.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.consistency.classpath"/>
+  </path>
+  
+  <path id="consistency.runtime.module.classpath">
+    <pathelement location="${consistency.testoutput.dir}"/>
+    <pathelement location="${consistency.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.consistency.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.consistency">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.consistency">
+    <patternset refid="excluded.from.module.consistency"/>
+  </patternset>
+  
+  <path id="consistency.module.sourcepath">
+    <dirset dir="${module.consistency.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.consistency" depends="compile.module.consistency.production,compile.module.consistency.tests" description="Compile module Consistency"/>
+  
+  <target name="compile.module.consistency.production" depends="register.custom.compilers" description="Compile module Consistency; production classes">
+    <mkdir dir="${consistency.output.dir}"/>
+    <javac2 destdir="${consistency.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.consistency}/javac">
+      <compilerarg line="${compiler.args.consistency}"/>
+      <bootclasspath refid="consistency.module.bootclasspath"/>
+      <classpath refid="consistency.module.production.classpath"/>
+      <src refid="consistency.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.consistency"/>
+    </javac2>
+    
+    <copy todir="${consistency.output.dir}">
+      <fileset dir="${module.consistency.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.consistency.tests" depends="register.custom.compilers,compile.module.consistency.production" description="compile module Consistency; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.consistency" description="cleanup module">
+    <delete dir="${consistency.output.dir}"/>
+    <delete dir="${consistency.testoutput.dir}"/>
+  </target>
+</project>
