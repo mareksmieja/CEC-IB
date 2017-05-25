@@ -16,13 +16,7 @@ public class Runner {
 
 
     public static void main(String[] args) throws IOException {
-        Runner runner;
-        if (args.length == 0) {
-            runner = new Runner("d:\\OneDrive - Uniwersytet Jagielloński\\programy\\git-repos\\CEC-IB\\CEC-IB-demo\\run.properties");
-        } else {
-            runner = new Runner(args[0]);
-
-        }
+        Runner runner = new Runner(args[0]);
     }
 
     public Runner(String propertiesFile) throws FileNotFoundException, IOException {
