@@ -1,6 +1,10 @@
 # Semi-supervised cross-entropy clustering with information bottleneck constraint - demo application
 
-This package implements CEC-IB (see https://arxiv.org/abs/1705.01601). The code is written in Java with use of Idea Intellij IDE.
+This package implements a method described in the paper:
+
+Marek Śmieja, Bernhard C. Geiger: Semi-supervised cross-entropy clustering with information bottleneck constraint, Information Sciences, 421, pp. 245-271, 2017
+
+The code is written in Java with use of Idea Intellij IDE.
 
 To run CEC-IB you need to provide properties file (exemplary file is placed in CEC-IB/run.properties). There are several input parameters to fill in:
 -fileInData is a path to vectorized data set
